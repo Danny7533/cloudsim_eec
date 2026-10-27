@@ -1,0 +1,115 @@
+machine class:
+{
+        Number of machines: 16
+        CPU type: X86
+        Number of cores: 8
+        Memory: 16384
+        S-States: [120, 100, 100, 80, 40, 10, 0]
+        P-States: [12, 8, 6, 4]
+        C-States: [12, 3, 1, 0]
+        MIPS: [3000, 2400, 2000, 1500]
+        GPUs: yes
+}
+
+machine class:
+{
+        Number of machines: 16
+        CPU type: X86
+        Number of cores: 8
+        Memory: 16384
+        S-States: [120, 100, 100, 80, 40, 10, 0]
+        P-States: [12, 8, 6, 4]
+        C-States: [12, 3, 1, 0]
+        MIPS: [3000, 2400, 2000, 1500]
+        GPUs: no
+}
+
+task class:
+{
+        Start time: 60000
+        End time : 13000000
+        Inter arrival: 180000
+        Expected runtime: 1000000
+        Memory: 8
+        VM type: LINUX
+        GPU enabled: yes
+        SLA type: SLA0
+        CPU type: X86
+        Task type: AI
+        Seed: 520800
+}
+
+task class:
+{
+        Start time: 100000
+        End time : 16000000
+        Inter arrival: 180000
+        Expected runtime: 9000000
+        Memory: 8
+        VM type: LINUX
+        GPU enabled: yes
+        SLA type: SLA1
+        CPU type: X86
+        Task type: AI
+        Seed: 520950
+}
+
+task class:
+{
+        Start time: 140000
+        End time : 25000000
+        Inter arrival: 180000
+        Expected runtime: 1800000
+        Memory: 8
+        VM type: LINUX
+        GPU enabled: yes
+        SLA type: SLA1
+        CPU type: X86
+        Task type: AI
+        Seed: 520340
+}
+
+task class:
+{
+        Start time: 140000
+        End time : 20000000
+        Inter arrival: 180000
+        Expected runtime: 1300000
+        Memory: 8
+        VM type: LINUX
+        GPU enabled: yes
+        SLA type: SLA1
+        CPU type: X86
+        Task type: AI
+        Seed: 520340
+}
+
+task class:
+{
+        Start time: 60000
+        End time : 14000000
+        Inter arrival: 180000
+        Expected runtime: 1300000
+        Memory: 8
+        VM type: LINUX
+        GPU enabled: yes
+        SLA type: SLA1
+        CPU type: X86
+        Task type: AI
+        Seed: 520340
+}
+
+task class:
+{
+        Start time: 140000
+        End time : 20000000
+        Inter arrival: 180000
+        Expected runtime: 1300000
+        Memory: 8
+        VM type: LINUX
+        GPU enabled: yes
+        SLA type: SLA1
+        CPU type: X86
+        Task type: AI
+        Seed: 520340
+}
