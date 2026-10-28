@@ -8,7 +8,15 @@
 #include "Scheduler.hpp"
 
 static bool migrating = false;
-static unsigned active_machines = 16;
+static unsigned active_machines;
+
+//Algo1: first-fit
+void first_fit() {
+    
+}
+//Algo2: best-fit
+//Algo3: pegasus
+//Algo4: consolidation
 
 void Scheduler::Init() {
     // Find the parameters of the clusters
@@ -21,20 +29,18 @@ void Scheduler::Init() {
     // 
     SimOutput("Scheduler::Init(): Total number of machines is " + to_string(Machine_GetTotal()), 3);
     SimOutput("Scheduler::Init(): Initializing scheduler", 1);
-    for(unsigned i = 0; i < active_machines; i++)
-        vms.push_back(VM_Create(LINUX, X86));
-    for(unsigned i = 0; i < active_machines; i++) {
-        machines.push_back(MachineId_t(i));
-    }    
-    for(unsigned i = 0; i < active_machines; i++) {
-        VM_Attach(vms[i], machines[i]);
+    active_machines = Machine_GetTotal();
+    for (unsigned i = 0; i < active_machines; i++) {
+        MachineInfo_t machine_info = Machine_GetInfo(MachineId_t(i));
+        vms.push_back(VM_Create(LINUX, machine_info.cpu));
+        VM_Attach(vms[i], MachineId_t(i));
     }
 
-    bool dynamic = false;
-    if(dynamic)
-        for(unsigned i = 0; i<4 ; i++)
-            for(unsigned j = 0; j < 8; j++)
-                Machine_SetCorePerformance(MachineId_t(0), j, P3);
+    // bool dynamic = false;
+    // if(dynamic)
+    //     for(unsigned i = 0; i<4 ; i++)
+    //         for(unsigned j = 0; j < 8; j++)
+    //             Machine_SetCorePerformance(MachineId_t(0), j, P3);
     // Turn off the ARM machines
     for(unsigned i = 24; i < Machine_GetTotal(); i++)
         Machine_SetState(MachineId_t(i), S5);
@@ -64,7 +70,19 @@ void Scheduler::NewTask(Time_t now, TaskId_t task_id) {
     // Turn on a machine, migrate an existing VM from a loaded machine....
     //
     // Other possibilities as desired
-    Priority_t priority = (task_id == 0 || task_id == 64)? HIGH_PRIORITY : MID_PRIORITY;
+    bool gpu_capable = IsGPUCapable(task_id);
+    unsigned required_memory = GetMemory(task_id);
+    VMType_t required_vm = RequiredVMType(task_id);
+    SLAType_t required_sla = RequiredSLA(task_id);
+    CPUType_t required_cpu = RequiredCPUType(task_id);
+    Priority_t priority;
+    if (required_sla == SLA0) {
+        priority = HIGH_PRIORITY;
+    } else if(required_sla == SLA1 || required_sla == SLA2) {
+        priority = MID_PRIORITY;
+    } else {
+        priority = LOW_PRIORITY;
+    }
     if(migrating) {
         VM_AddTask(vms[0], task_id, priority);
     }
