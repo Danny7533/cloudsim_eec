@@ -32,3 +32,6 @@ $(TARGET): $(OBJ)
 # Clean up build files
 clean:
 	rm -f $(OBJ) $(TARGET)
+
+format:
+	clang-format --style=file -i Scheduler.cpp

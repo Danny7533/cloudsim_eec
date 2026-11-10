@@ -21,10 +21,7 @@ public:
     void PeriodicCheck(Time_t now);
     void Shutdown(Time_t now);
     void TaskComplete(Time_t now, TaskId_t task_id);
-    VMId_t FindOrCreateVM(CPUType_t cpu_type, VMType_t vm_type, MachineId_t machine_id);
-    void SLAWarning_Handler(Time_t time, TaskId_t task_id);
 private:
-    void pegasus_periodic();
     vector<VMId_t> vms;
     vector<MachineId_t> machines;
 };
